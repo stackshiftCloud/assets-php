@@ -8,6 +8,8 @@ use RuntimeException;
 
 final class AssetsClient
 {
+    use AssetsWorkflows;
+
     public function __construct(
         private readonly string $apiKey,
         private readonly string $baseUrl = 'https://api.stackshift.cloud/api/v1',
