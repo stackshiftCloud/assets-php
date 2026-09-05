@@ -9,6 +9,7 @@ use RuntimeException;
 final class AssetsClient
 {
     use AssetsWorkflows;
+    use AssetsMedia;
 
     public function __construct(
         private readonly string $apiKey,
