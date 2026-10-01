@@ -8,8 +8,19 @@ use RuntimeException;
 
 final class AssetsClient
 {
+    use AICredits;
     use AssetsWorkflows;
     use AssetsMedia;
+    use AssetsPlatform;
+
+    private ?string $assetSpaceId = null;
+
+    public function forAssetSpace(string $spaceId): self
+    {
+        $scoped = clone $this;
+        $scoped->assetSpaceId = $spaceId;
+        return $scoped;
+    }
 
     public function __construct(
         private readonly string $apiKey,
@@ -238,6 +249,10 @@ final class AssetsClient
 
     private function request(string $method, string $path, ?array $body = null, array $headers = []): mixed
     {
+        if ($this->assetSpaceId !== null && $this->assetSpaceId !== '' &&
+            !array_filter($headers, static fn (string $header): bool => str_starts_with(strtolower($header), 'x-asset-space-id:'))) {
+            $headers[] = 'X-Asset-Space-ID: ' . $this->assetSpaceId;
+        }
         $headers[] = 'Content-Type: application/json';
         return $this->curl($method, $path, $body === null ? null : json_encode($body, JSON_THROW_ON_ERROR), $headers);
     }
