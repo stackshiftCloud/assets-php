@@ -13,6 +13,13 @@ trait AssetsWorkflows
         ]);
     }
 
+    public function estimateTransform(string $assetId, string $versionId, array $definition): array
+    {
+        return $this->request('POST', '/assets/' . rawurlencode($assetId) . '/transforms/estimate', [
+            'version_id' => $versionId, 'definition' => $definition,
+        ]);
+    }
+
     public function materializeTransform(string $assetId, array $input, ?string $idempotencyKey = null): array
     {
         $headers = $idempotencyKey ? ['Idempotency-Key: ' . $idempotencyKey] : [];

@@ -44,6 +44,26 @@ final class AssetsClient
         return $this->request('GET', '/assets/' . rawurlencode($assetId));
     }
 
+    public function usage(string $assetId): array
+    {
+        return $this->request('GET', '/assets/' . rawurlencode($assetId) . '/usage');
+    }
+
+    public function hold(string $assetId): array
+    {
+        return $this->request('GET', '/assets/' . rawurlencode($assetId) . '/hold');
+    }
+
+    public function createReuploadRequest(string $assetId, array $input = []): array
+    {
+        return $this->request('POST', '/assets/' . rawurlencode($assetId) . '/reupload-requests', $input === [] ? null : $input);
+    }
+
+    public function reuploadRequests(string $assetId): array
+    {
+        return $this->request('GET', '/assets/' . rawurlencode($assetId) . '/reupload-requests');
+    }
+
     public function delete(string $assetId, int $revision, ?string $idempotencyKey = null): array
     {
 		$headers = ['If-Match: "' . $revision . '"'];
