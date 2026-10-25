@@ -12,6 +12,7 @@ final class AssetsClient
     use AssetsWorkflows;
     use AssetsMedia;
     use AssetsPlatform;
+    use Partner;
 
     private ?string $assetSpaceId = null;
 

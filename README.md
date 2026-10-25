@@ -16,6 +16,24 @@ $funding = $assets->setAIFundingMode('assets', 'managed');
 
 Keep the account API key and checkout creation on your server.
 
+## Partner platforms
+
+Staff-enabled partner accounts buy domains for merchants from their StackShift wallet. Use an API token with the `partner:manage` scope (and `mail:manage` to run campaigns) from the server-side client:
+
+```php
+$domain = $assets->purchasePartnerDomain([
+    'domain' => 'merchantshop.com',
+    'years' => 1,
+    'merchantRef' => 'm_123',
+    'registrant' => ['first_name' => 'Ada', 'last_name' => 'Obi', 'email' => 'ada@merchantshop.com', 'phone' => '+2348012345678', 'address' => '1 Marina', 'city' => 'Lagos', 'state' => 'Lagos', 'postal_code' => '101001', 'country' => 'NG'],
+    'brand' => ['name' => 'Merchant Shop', 'postalAddress' => '1 Marina, Lagos, Nigeria'],
+    'replies' => ['mode' => 'forward', 'forwardTo' => 'ada@gmail.com'],
+], 'order-m_123-1');
+$status = $assets->getPartnerDomain($domain['id']);
+```
+
+Related methods are `partnerOverview`, `updatePartnerSettings`, `listPartnerDomains` (with `q` and `attention` to find the merchants that need you), `retryPartnerDomain`, `getPartnerDiagnosis`, `restorePartnerDns`, `transferOutPartnerDomain`, `resumePartnerBrand`, `getPartnerComplaints`, `listPartnerComplaintSources`, `suppressPartnerNeverOpened`, `undoPartnerSuppression`, `partnerUsage`, `listPartnerRequests` and `createPartnerRequest`. `transferOutPartnerDomain` needs the `partner:transfer` scope (or `*`); `partner:manage` alone is refused. Purchases are capped at 30 per minute and, per partner, at 25 domains in a rolling 24 hours (429 `daily_purchase_limit`; staff can raise it). Validation errors are 400, state conflicts are 409.
+
 ## Native video, governed DAM and product rendering
 
 Use the space-scoped DAM and video clients for collaborators, metadata schemas, bucket governance, reviewed publications, picker capabilities, model preparation, product rendering, galleries, version-pinned encoding, captions and playback sessions.
