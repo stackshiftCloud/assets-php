@@ -1,6 +1,10 @@
 # StackShift Assets for PHP
 
-Use \`StackShift\AssetsClient\` from Composer. Laravel applications may register it as a singleton and pass \`UploadedFile::getRealPath()\` to upload or replace. Mutations require the current revision; resumable-session creation accepts an idempotency key.
+```bash
+composer require stackshift/assets
+```
+
+Use `StackShift\AssetsClient` from Composer. Laravel applications may register it as a singleton and pass `UploadedFile::getRealPath()` to upload or replace. Mutations require the current revision; resumable-session creation accepts an idempotency key.
 
 ## AI credits
 
@@ -32,7 +36,7 @@ $domain = $assets->purchasePartnerDomain([
 $status = $assets->getPartnerDomain($domain['id']);
 ```
 
-Related methods are `partnerOverview`, `updatePartnerSettings`, `listPartnerDomains` (with `q` and `attention` to find the merchants that need you), `retryPartnerDomain`, `getPartnerDiagnosis`, `restorePartnerDns`, `transferOutPartnerDomain`, `resumePartnerBrand`, `getPartnerComplaints`, `listPartnerComplaintSources`, `suppressPartnerNeverOpened`, `undoPartnerSuppression`, `partnerUsage`, `listPartnerRequests` and `createPartnerRequest`. `transferOutPartnerDomain` needs the `partner:transfer` scope (or `*`); `partner:manage` alone is refused. Purchases are capped at 30 per minute and, per partner, at 25 domains in a rolling 24 hours (429 `daily_purchase_limit`; staff can raise it). Validation errors are 400, state conflicts are 409.
+Related methods are `partnerOverview`, `updatePartnerSettings`, `listPartnerDomains` (with `q`, `attention` and `website` to find the merchants that need you), `connectPartnerDomain`, `transferInPartnerDomain` and `transferInConnectedPartnerDomain` and `switchPartnerTransferNameservers` for domains the merchant already owns, `setPartnerWebsite`, `removePartnerWebsite`, `checkPartnerWebsite` and `listPartnerWebsiteProjects` for the storefront, `listPartnerMailboxes`, `createPartnerMailbox`, `updatePartnerMailbox`, `createPartnerMailboxPasswordLink`, `pausePartnerMailbox`, `resumePartnerMailbox`, `removePartnerMailbox`, `createPartnerAlias`, `updatePartnerAlias` and `removePartnerAlias` for merchant mailboxes, `startPartnerMailMigration`, `getPartnerMailMigration`, `switchPartnerMailMigration`, `cancelPartnerMailMigration`, `retryPartnerMailMigration`, `retryPartnerMailMigrationAccount` and `skipPartnerMailMigrationAccount` for moving old email in, `retryPartnerDomain`, `getPartnerDiagnosis`, `restorePartnerDns`, `transferOutPartnerDomain`, `resumePartnerBrand`, `getPartnerComplaints`, `listPartnerComplaintSources`, `suppressPartnerNeverOpened`, `undoPartnerSuppression`, `partnerUsage`, `listPartnerRequests` and `createPartnerRequest`. `transferOutPartnerDomain` needs the `partner:transfer` scope (or `*`); `partner:manage` alone is refused. Purchases are capped at 30 per minute and, per partner, at 25 domains in a rolling 24 hours (429 `daily_purchase_limit`; staff can raise it). Validation errors are 400, state conflicts are 409.
 
 ## Native video, governed DAM and product rendering
 
